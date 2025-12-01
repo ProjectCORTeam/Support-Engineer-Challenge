@@ -1,0 +1,3 @@
+# This directory stores the SQLite database file
+# The database file (taskmaster.db) is git-ignored
+

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Database files (will be created inside container)
+data/*.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation for evaluators
+INTERNAL_NOTES.md
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+

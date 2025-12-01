@@ -1,0 +1,31 @@
+{
+  "name": "taskmaster-challenge",
+  "version": "1.0.0",
+  "description": "Challenge técnico para evaluar Support Engineers - TaskMaster API",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "setup": "npm run migrate && npm run seed"
+  },
+  "keywords": [
+    "challenge",
+    "support-engineer",
+    "taskmaster"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sql.js": "^1.10.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

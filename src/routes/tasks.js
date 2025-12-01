@@ -39,9 +39,15 @@ router.get('/users/:userId/tasks', (req, res) => {
     // The API documentation says status is "optional", implying
     // that when not provided, all statuses should be returned.
     // ============================================================
-    const statusFilter = status || 'pending';
-    query += ' AND status = ?';
-    params.push(statusFilter);
+  
+    // Exclude soft deletes
+    query += ' AND is_deleted = 0';
+
+    // Only apply status filter if provided
+    if (status) {
+      query += ' AND status = ?';
+      params.push(status);
+    }
 
     // Filter by due_date_before if provided
     if (due_date_before) {

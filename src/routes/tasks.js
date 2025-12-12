@@ -9,7 +9,7 @@ const router = express.Router();
  * Returns a list of tasks assigned to a specific user.
  * 
  * Query Parameters:
- *   - status (optional, string): Filter by status. Values: pending, in_progress, completed
+ *   - status (optional, string): Filter by status. Values: pending, in_progress, completed, archived
  *   - due_date_before (optional, date YYYY-MM-DD): Returns tasks with due date before or equal to this date
  */
 router.get('/users/:userId/tasks', (req, res) => {
@@ -30,7 +30,8 @@ router.get('/users/:userId/tasks', (req, res) => {
     }
 
     // Build the query
-    let query = 'SELECT * FROM tasks WHERE assignee_id = ?';
+    // Excluimos las tareas eliminadas
+    let query = 'SELECT * FROM tasks WHERE assignee_id = ? and is_deleted = 0';
     const params = [userIdNum];
 
     // ============================================================
@@ -39,9 +40,22 @@ router.get('/users/:userId/tasks', (req, res) => {
     // The API documentation says status is "optional", implying
     // that when not provided, all statuses should be returned.
     // ============================================================
-    const statusFilter = status || 'pending';
-    query += ' AND status = ?';
-    params.push(statusFilter);
+  //  const statusFilter = status || 'pending';
+   // query += ' AND status = ?';
+    //params.push(statusFilter);
+
+       // Filtrar por status solo si es proporcioando
+       if (status) {
+        // Valudar status
+        const validStatuses = ['pending', 'in_progress', 'completed', 'archived'];
+        if (!validStatuses.includes(status)) {
+          return res.status(400).json({ 
+            error: 'Status invalid. Valid status: pending, in_progress, completed, archived' 
+          });
+        }
+        query += ' AND status = ?';
+        params.push(status);
+      }
 
     // Filter by due_date_before if provided
     if (due_date_before) {
